@@ -1,0 +1,24 @@
+.wrapper {
+  margin-bottom: 140px;
+
+  &__users {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 29px;
+    margin-bottom: 50px;
+  }
+}
+
+@media (max-width: 768px) {
+  .wrapper__users {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+}
+
+@media (max-width: 360px) {
+  .wrapper__users {
+    grid-template-columns: 1fr;
+  }
+
+}

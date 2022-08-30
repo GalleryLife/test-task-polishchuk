@@ -23,7 +23,23 @@
     "extends": [
       "react-app",
       "react-app/jest"
-    ]
+    ],
+    "rules": {
+      "indent": [
+        "warn",
+        2
+      ],
+      "quotes": [
+        "warn",
+        "single"
+      ],
+      "jsx-quotes": [
+        "warn",
+        "prefer-single"
+      ],
+      "no-console": "warn",
+      "no-template-curly-in-string": "off"
+    }
   },
   "browserslist": {
     "production": [
@@ -36,5 +52,12 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "antd": "^4.22.8",
+    "axios": "^0.27.2",
+    "formik": "^2.2.9",
+    "sass": "^1.54.5",
+    "yup": "^0.32.11"
   }
 }

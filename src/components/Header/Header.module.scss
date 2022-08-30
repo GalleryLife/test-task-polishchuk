@@ -1,0 +1,26 @@
+.header {
+  padding: 0 15px;
+  background-color: #fff;
+  display: flex;
+  justify-content: center;
+
+  &__wrapper {
+    width: 1169px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  &__logo {
+    display: flex;
+    align-items: center;
+
+    h1 {
+      text-transform: uppercase;
+    }
+  }
+
+  &__nav button:nth-child(2) {
+    margin-left: 10px;
+  }
+}
