@@ -5,7 +5,8 @@ const Title = ({text}) => (
   style={{
     fontSize: '40px',
     lineHeight: '40px',
-    fontWeight: 400
+    fontWeight: 400,
+    marginBottom: '50px'
   }}
 >{text}</h2>
 )
