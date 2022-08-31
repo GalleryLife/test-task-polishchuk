@@ -15,15 +15,15 @@
   }
 }
 
-span {
+.control__button {
   position: relative;
   color: #7E7E7E;
   border: 1px solid #D0CFCF;
   border-radius: 4px;
   z-index: 1;
   padding: 14px 147px 14px 99px;
-  width: 380px;
 }
+
 
 input[type = 'file'] {
   opacity: 0;
@@ -32,4 +32,10 @@ input[type = 'file'] {
   width: 0;
   height: 0;
   z-index: -10;
+}
+
+@media (max-width: 428px) {
+  .control__button {
+    padding: 14px 95px 14px 99px;
+  }
 }

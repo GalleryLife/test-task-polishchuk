@@ -1,18 +1,11 @@
-import React from 'react'
+import React from 'react';
+import styles from './Button.module.scss';
 
 const Button = ({text, action, type}) => (
  <button 
  onClick={action}
  type={type}
- style={{
-   backgroundColor: '#F4E041',
-   border: 'none',
-   width: '120px',
-   height: '34px',
-   borderRadius: '80px',
-   lineHeight: '26px',
-   cursor: 'pointer'
- }}
+ className={styles.button}
  >{text}</button>
 )
 

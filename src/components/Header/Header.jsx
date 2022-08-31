@@ -1,7 +1,7 @@
-import React from 'react'
+import React from 'react';
 import Button from '../Button/Button';
-import logo from '../../assets/img/Group 43.png'
-import styles from './Header.module.scss'
+import styles from './Header.module.scss';
+import logo from '../../assets/img/Group 43.png';
 
 const Header = () => (
   <header className={styles.header}>
@@ -13,8 +13,12 @@ const Header = () => (
         <h1>Testtask</h1>
       </div>
       <nav className={styles.header__nav}>
-        <Button type='button' text="Users"/>
-        <Button type='button' text="Sign up"/>
+        <a href="#users">
+          <Button type="button" text="Users"/>
+        </a>
+        <a href="#signUp">
+          <Button type="button" text="Sign up"/>
+        </a>
       </nav>
     </section>
   </header>

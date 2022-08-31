@@ -4,31 +4,72 @@
   align-items: center;
   margin-bottom: 100px;
 }
+
 .wrapper__form {
   display: flex;
   flex-direction: column;
   align-items: center;
+}
 
-  input[type = 'text'], [type = 'email'] {
-    width: 380px;
-    border-radius: 4px;
-    border: 1px solid #D0CFCF;
-    padding: 14px 0 14px 16px;
-    color: #7E7E7E;
-    outline: none;
+.form__items {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  label {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 50px;
+    align-items: start;
+    color: red;
+
+    span {
+      color: #7E7E7E;
+      font-size: 12px;
+      line-height: 14px;
+    }
+  }
+
+  input[name='phone'] {
+    margin-bottom: 8px;
+  }
+
+  input:focus {
+    box-shadow: 3px 7px 16px rgb(0 0 0 / 8%);
   }
 }
 
-.wrapper input[type = 'text'], [type = 'email'] {
-  margin-bottom: 50px;
+.item {
+  width: 380px;
+  border-radius: 4px;
+  border: 1px solid #D0CFCF;
+  padding: 14px 0 14px 16px;
+  color: #7E7E7E;
+  outline: none;
 }
 
-.form_radio {
+
+.form__radio {
   margin-bottom: 47px;
   position: relative;
   right: 105px;
+
+  h4 {
+    font-weight: 400
+  }
 }
 
+.error {
+  color: red;
+  font-size: 36px;
+}
 
-
+@media (max-width: 395px) {
+  .form__radio {
+    padding: 0 0 0 40px;
+  }
+  .item {
+    width: 328px;
+  }
+}
 

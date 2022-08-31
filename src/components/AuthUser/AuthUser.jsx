@@ -1,18 +1,21 @@
-import React, {useState} from 'react';
-import styles from './AuthUser.module.scss';
-import {ErrorMessage, Form, Field, Formik} from 'formik';
-import * as Yup from 'yup';
 import Title from '../Title/Title';
-import {useDispatch} from 'react-redux';
+import React, {useState} from 'react';
 import Button from '../Button/Button';
-import CustomRadio from '../ProductMain/CustomInput/Radio/CustomRadio';
-import File from '../ProductMain/CustomInput/File/File';
+import {useDispatch} from 'react-redux';
+import styles from './AuthUser.module.scss';
+import File from '../CustomInput/File/File';
+import {ErrorMessage, Form, Field, Formik} from 'formik';
+import {authUser} from '../../features/users/usersSlice';
+import CustomRadio from '../CustomInput/Radio/CustomRadio';
+import {validationSchema, initialValues} from '../../validation/validation';
 
-const AuthUser = () => {
+
+const AuthUser = ({responseText}) => {
   const [fieldValue, setFieldValue] = useState(null)
   const [isError, setError] = useState(false)
   
   const dispatch = useDispatch()
+  
   const handleSetPhoto = (event) => {
     const {type, size} = event.currentTarget.files[0]
     if (type === 'image/jpeg' && size < 5e+6) {
@@ -23,54 +26,46 @@ const AuthUser = () => {
     }
   }
   
-  const handleSubmit = (values) => {
+  const handleSubmit = (values, {setSubmitting}) => {
     const formData = new FormData()
     formData.append('position_id', 1);
     formData.append('name', values.firstName);
     formData.append('email', values.email);
     formData.append('phone', values.phone);
     formData.append('photo', fieldValue);
-    // dispatch(authUser(formData))
-    console.log(values)
+    setSubmitting = false
+    dispatch(authUser(formData))
   }
+  
+  const responseFalse = () => responseText ? <h2 className={styles.error}>{responseText}</h2> : ''
   
   return (
     <section className={styles.wrapper}>
+      {responseFalse()}
+      <a name="signUp"/>
       <Title text="Working with POST request"/>
       <Formik
-        initialValues={{firstName: '', email: '', phone: '', picked: ''}}
-        validationSchema={Yup.object({
-          firstName: Yup.string()
-            .max(15, 'Must be 15 characters or less')
-            .required('Required'),
-          email: Yup.string().email('Invalid email address').required('Required'),
-          phone: Yup.string()
-            .matches(`^[\+]{0,1}380([0-9]{9})$`, 'Phone number is not valid')
-            .required('Required'),
-          picked: Yup.string()
-            .oneOf(
-              ['1', '2', '3', '4'],
-              'Invalid Job Type'
-            )
-            .required('Required')
-        })}
-        onSubmit={(values, {setSubmitting}) => {
-          setTimeout(() => {
-            handleSubmit(values)
-            setSubmitting = false
-          }, 400)
-        }}
+        initialValues={initialValues}
+        validationSchema={validationSchema}
+        onSubmit={handleSubmit}
       >
         <Form className={styles.wrapper__form}>
-          <Field placeholder="Your Name" name="firstName" type="text"></Field>
-          <ErrorMessage name="firstName"/>
-          <Field placeholder="Email" name="email" type="email"></Field>
-          <ErrorMessage name="email"/>
-          <label htmlFor="phone">
-            <Field placeholder="Phone" name="phone" type="text"></Field>
-          </label>
-          <ErrorMessage name="phone"/>
-          <div className={styles.form_radio}>
+          <div className={styles.form__items}>
+            <label>
+              <Field placeholder="Your Name" name="firstName" className={styles.item} type="text"/>
+              <ErrorMessage name="firstName"/>
+            </label>
+            <label>
+              <Field placeholder="Email" name="email" className={styles.item} type="email"/>
+              <ErrorMessage name="email"/>
+            </label>
+            <label htmlFor="phone">
+              <Field placeholder="Phone" name="phone" id={styles.phone} className={styles.item} type="text"/>
+              <span>+38 (XXX) XXX - XX - XX</span>
+              <ErrorMessage name="phone"/>
+            </label>
+          </div>
+          <div className={styles.form__radio}>
             <h4>Select your position</h4>
             <Field
               name="picked"
@@ -100,10 +95,10 @@ const AuthUser = () => {
               label="QA"
               component={CustomRadio}
             />
+            <ErrorMessage name="picked"/>
           </div>
-          <ErrorMessage name="picked"/>
           <File handleSetPhoto={handleSetPhoto} fieldValue={fieldValue} isError={isError}/>
-          <Button type="submit" text="Submit"/>
+          <Button type="submit" text="Sign in"/>
         </Form>
       </Formik>
     </section>

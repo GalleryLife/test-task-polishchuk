@@ -5,7 +5,9 @@
   margin: 0 auto 140px auto;
 
   &__img {
+    max-width: 1170px;
     width: 100%;
+    height: auto;
   }
 
   &__info {
@@ -22,5 +24,18 @@
       font-size: 16px;
       line-height: 26px;
     }
+  }
+}
+
+@media (max-width: 768px) {
+  .main__img {
+    height: 500px;
+  }
+
+}
+
+@media (max-width: 395px) {
+  .main__info {
+    width: 340px;
   }
 }

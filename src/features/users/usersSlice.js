@@ -1,31 +1,37 @@
-import {createAsyncThunk, createSlice} from '@reduxjs/toolkit';
 import axios from 'axios';
+import {createAsyncThunk, createSlice} from '@reduxjs/toolkit';
 
 const initialState = {
   users: [],
-  fetching: false,
-  response: []
+  response: {},
+  authResponse: {}
 }
 
 export const getUsers = createAsyncThunk(
   'users/getUsers',
-  async (_, {dispatch}) => {
-    await axios('https://frontend-test-assignment-api.abz.agency/api/v1/users?page=1&count=6')
-      .then(response => {
-        dispatch(getResponse(response.data))
-        dispatch(setUsers(response.data.users))
-      })
+  async (_, {
+    dispatch
+  }) => {
+    try {
+      await axios(`https://frontend-test-assignment-api.abz.agency/api/v1/users?page=1&count=6`)
+        .then(response => {
+          dispatch(getResponse(response.data))
+          dispatch(setUsers(response.data.users))
+        })
+    } catch (error) {
+      console.log(error)
+    }
   }
 )
 
 export const getMoreUsers = createAsyncThunk(
   'users/setMoreUsers',
-  async (_, {dispatch}) => {
+  async (page, {dispatch}) => {
     try {
-      await axios(`https://frontend-test-assignment-api.abz.agency/api/v1/users?page=${1}&count=6`)
+      await axios(`https://frontend-test-assignment-api.abz.agency/api/v1/users?page=${page}&count=6`)
         .then(response => dispatch(setMoreUsers(response.data.users)))
     } catch (error) {
-    
+      console.log(error)
     }
   }
 )
@@ -33,9 +39,8 @@ export const getMoreUsers = createAsyncThunk(
 export const authUser = createAsyncThunk(
   'users/authUser',
   async (fromData, {dispatch}) => {
-    const token = await axios('https://frontend-test-assignment-api.abz.agency/api/v1/token')
-    console.log('a')
-    try{
+    try {
+      const token = await axios('https://frontend-test-assignment-api.abz.agency/api/v1/token')
       await fetch('https://frontend-test-assignment-api.abz.agency/api/v1/users', {
         method: 'POST',
         body: fromData,
@@ -44,11 +49,10 @@ export const authUser = createAsyncThunk(
         }
       })
         .then(response => response.json())
-        .then(data => console.log(data))
+        .then(data => dispatch(getAuthResponse((data))))
     } catch (error) {
       console.log(error)
     }
-
   }
 )
 
@@ -64,7 +68,9 @@ const usersSlice = createSlice({
     },
     getResponse: (state, action) => {
       state.response = action.payload
-      console.log(state.response)
+    },
+    getAuthResponse: (state, action) => {
+      state.authResponse = action.payload
     },
     extraReducers: (builder) => {
       builder
@@ -75,10 +81,9 @@ const usersSlice = createSlice({
           usersSlice.caseReducers.setMoreUsers(state, action)
           usersSlice.caseReducers.getResponse(state, action)
         })
-        .addCase(authUser.fulfilled)
     }
   }
 })
 
-export const {setUsers, setMoreUsers, getResponse} = usersSlice.actions
+export const {setUsers, setMoreUsers, getResponse, getAuthResponse} = usersSlice.actions
 export default usersSlice.reducer

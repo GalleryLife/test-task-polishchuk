@@ -1,19 +1,32 @@
-import React from 'react';
 import './App.css';
-import Users from './components/Users/Users';
-import AuthUser from './components/AuthUser/AuthUser';
+import React from 'react';
+import {Suspense} from 'react';
+import {useSelector} from 'react-redux';
 import Header from './components/Header/Header';
+import Success from './components/Success/Succes';
+import AuthUser from './components/AuthUser/AuthUser';
 import ProductMain from './components/ProductMain/ProductMain';
 
-function App() {
+const Users = React.lazy(() => import('./components/Users/Users'))
+
+const App = () => {
+  const {authResponse} = useSelector(({users}) => users)
+  
   return (
     <>
       <Header/>
       <main>
         <ProductMain/>
         <section className="container">
-          <Users/>
-          <AuthUser/>
+          <Suspense fallback={'Loading...'}>
+            <Users/>
+          </Suspense>
+          {
+            authResponse.success ?
+            <Success responseText={authResponse.message}/>
+            :
+            <AuthUser responseText={authResponse.message}/>
+          }
         </section>
       </main>
     </>
