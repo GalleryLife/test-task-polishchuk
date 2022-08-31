@@ -55,7 +55,6 @@
   },
   "devDependencies": {
     "@ant-design/icons": "^4.7.0",
-    "antd": "^4.22.8",
     "axios": "^0.27.2",
     "formik": "^2.2.9",
     "sass": "^1.54.5",
